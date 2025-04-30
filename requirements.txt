@@ -1,9 +1,8 @@
-langchain
-openai
+# --- minimal, works on Streamlit Cloud free tier ---
+langchain==0.0.353          # pre-split monolithic wheel
+transformers==4.40.1
+sentence-transformers
 faiss-cpu
 pypdf
-tiktoken
-python-dotenv
 streamlit
-transformers
-sentence-transformers
+python-dotenv               # optional .env support

@@ -8,16 +8,18 @@ def load_vectorstore():
     embedder = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     return FAISS.load_local("ta_vectorstore", embedder)
 
+# ---- tiny GPT-2 (44 MB) runs comfortably on 1 GB RAM ----
 def load_llm():
     pipe = pipeline(
         "text-generation",
-        model="distilgpt2",
-        device=-1,              # -1 = force CPU, no CUDA check
-        max_new_tokens=256,
+        model="sshleifer/tiny-gpt2",  # tiny weights
+        device=-1,                    # CPU
+        max_new_tokens=128,
+        temperature=0.5,
         do_sample=True,
-        temperature=0.4
     )
     return HuggingFacePipeline(pipeline=pipe)
+
 
 def build_qa_chain():
     vs = load_vectorstore()
