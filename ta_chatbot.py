@@ -9,7 +9,14 @@ def load_vectorstore():
     return FAISS.load_local("ta_vectorstore", embedder)
 
 def load_llm():
-    pipe = pipeline("text-generation", model="microsoft/phi-2", max_new_tokens=256, do_sample=True)
+    pipe = pipeline(
+        "text-generation",
+        model="distilgpt2",
+        device=-1,              # -1 = force CPU, no CUDA check
+        max_new_tokens=256,
+        do_sample=True,
+        temperature=0.4
+    )
     return HuggingFacePipeline(pipeline=pipe)
 
 def build_qa_chain():
